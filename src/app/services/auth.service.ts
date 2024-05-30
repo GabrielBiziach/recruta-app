@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -14,6 +14,7 @@ interface AuthResponse {
 })
 export class AuthService {
   private authUrl = 'http://localhost:8080/api/auth/login';
+  private token: string | null = null;
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -21,7 +22,7 @@ export class AuthService {
     return this.http.post<AuthResponse>(this.authUrl, { username, password })
       .pipe(
         tap(response => {
-          sessionStorage.setItem('token', response.token);
+          this.setToken(response.token);
           sessionStorage.setItem('role', response.role);
           this.redirectUser(response.role);
         })
@@ -29,12 +30,25 @@ export class AuthService {
   }
 
   logout() {
-    sessionStorage.removeItem('token');
+    this.setToken(null);
     sessionStorage.removeItem('role');
+    this.router.navigate(['/']);
+  }
+
+  private setToken(token: string | null) {
+    this.token = token;
+    if (token) {
+      sessionStorage.setItem('token', token);
+    } else {
+      sessionStorage.removeItem('token');
+    }
   }
 
   getToken(): string | null {
-    return sessionStorage.getItem('token');
+    if (!this.token) {
+      this.token = sessionStorage.getItem('token');
+    }
+    return this.token;
   }
 
   getRole(): string | null {
@@ -47,5 +61,9 @@ export class AuthService {
     } else if (role === 'user') {
       this.router.navigate(['/user']);
     }
+  }
+
+  isLoggedIn(): boolean {
+    return !!this.getToken();
   }
 }
