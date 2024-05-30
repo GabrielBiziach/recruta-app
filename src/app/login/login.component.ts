@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
+
 
 @Component({
   selector: 'app-login',
@@ -14,15 +16,15 @@ export class LoginComponent {
   username: string = '';
   password: string = '';
 
-  constructor(private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   onSubmit() {
-    if (this.username === 'admin' && this.password === 'admin') {
-      this.router.navigate(['/admin']);
-    } else if (this.username === 'user' && this.password === 'user') {
-      this.router.navigate(['/user']);
-    } else {
-      alert('Credenciais inválidas');
-    }
+    this.authService.login(this.username, this.password).subscribe({
+      next: (response) => {
+      },
+      error: () => {
+        alert('Credenciais inválidas');
+      }
+    });
   }
 }
