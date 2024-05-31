@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { JobService } from '../../services/job.service';
-import { Job } from './models/job.model';
+import { Job } from '../../models/job.model';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-job',

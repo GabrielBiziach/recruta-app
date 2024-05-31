@@ -1,20 +1,24 @@
+// auth.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { environment } from '../environments/environment';
 
 interface AuthResponse {
   token: string;
   role: string;
+  idUser: number;
+  username: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private authUrl = 'http://localhost:8080/api/auth/login';
-  private token: string | null = null;
+  private authUrl = `${environment.apiUrl}/auth/login`;
+  private currentUser: { idUser: number, role: string, username: string } | null = null;
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -22,37 +26,47 @@ export class AuthService {
     return this.http.post<AuthResponse>(this.authUrl, { username, password })
       .pipe(
         tap(response => {
-          this.setToken(response.token);
-          sessionStorage.setItem('role', response.role);
+          this.setSession(response);
           this.redirectUser(response.role);
         })
       );
   }
 
   logout() {
-    this.setToken(null);
-    sessionStorage.removeItem('role');
+    this.clearSession();
     this.router.navigate(['/']);
   }
 
-  private setToken(token: string | null) {
-    this.token = token;
-    if (token) {
-      sessionStorage.setItem('token', token);
-    } else {
-      sessionStorage.removeItem('token');
-    }
+  private setSession(authResponse: AuthResponse) {
+    sessionStorage.setItem('token', authResponse.token);
+    sessionStorage.setItem('currentUser', JSON.stringify({
+      idUser: authResponse.idUser,
+      username: authResponse.username,
+      role: authResponse.role
+    }));
+    this.currentUser = {
+      idUser: authResponse.idUser,
+      username: authResponse.username,
+      role: authResponse.role
+    };
+  }
+
+  private clearSession() {
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('currentUser');
+    this.currentUser = null;
   }
 
   getToken(): string | null {
-    if (!this.token) {
-      this.token = sessionStorage.getItem('token');
-    }
-    return this.token;
+    return sessionStorage.getItem('token');
   }
 
   getRole(): string | null {
-    return sessionStorage.getItem('role');
+    return this.currentUser ? this.currentUser.role : null;
+  }
+
+  getUserId(): number | null {
+    return this.currentUser ? this.currentUser.idUser : null;
   }
 
   private redirectUser(role: string) {

@@ -1,0 +1,30 @@
+<div class="container mt-4">
+  <h2 class="mb-4">Vagas Disponíveis</h2>
+  <form [formGroup]="applicationForm" (ngSubmit)="applyToJob(applicationForm.value.jobId)">
+    <div class="mb-3">
+      <label for="jobId" class="form-label">Selecione uma vaga</label>
+      <select id="jobId" formControlName="jobId" class="form-control" required>
+        <option *ngFor="let job of jobs" [value]="job.id">{{ job.title }}</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Candidatar-se</button>
+  </form>
+
+  <h3 class="mt-4">Minhas Candidaturas</h3>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Título</th>
+        <th>Data da Candidatura</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let application of applications">
+        <td>{{ application.job?.title }}</td>
+        <td>{{ application.applicationDate | date }}</td>
+        <td>{{ application.status }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
