@@ -1,27 +1,64 @@
-# RecrutaApp
+# Recruta - Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.1.
+Este é o repositório do frontend para o projeto Recruta, desenvolvido em Angular como parte de um teste técnico para Desenvolvedor Full Stack.
 
-## Development server
+## Objetivo
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+O objetivo deste projeto é criar uma interface web para facilitar o processo de recrutamento interno para os colaboradores da empresa. A aplicação permite aos usuários pesquisar e candidatar-se a vagas internas, passando por filtros de requisitos específicos.
 
-## Code scaffolding
+## Requisitos Funcionais
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Autenticação e Autorização:** Implementar um sistema de autenticação seguro para os usuários.
+- **Listagem de Vagas:** Exibir uma lista de vagas disponíveis, incluindo informações como título, descrição e requisitos.
+- **Detalhes da Vaga:** Permitir aos usuários visualizar os detalhes de uma vaga específica, incluindo requisitos e informações adicionais.
+- **Candidatura a Vagas:** Implementar um sistema de candidatura às vagas, onde os usuários podem expressar interesse em uma posição específica.
 
-## Build
+### Bônus
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- **Painel do Candidato:** Criar um painel para os candidatos acompanharem o status de suas candidaturas e receberem feedbacks.
 
-## Running unit tests
+## Escopo
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- Desenvolver o frontend utilizando o framework Angular.
+- Utilizar Angular CLI para a criação e gerenciamento do projeto.
+- Utilizar componentes e serviços para organizar o código e a lógica da aplicação.
 
-## Running end-to-end tests
+## Instalação e Execução
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Antes de executar o projeto, certifique-se de ter instalado:
 
-## Further help
+- **Node.js e npm**
+- **Angular CLI**
+- **Bootstrap**
+- **jQuery**
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### Passos para executar o projeto:
+
+1. **Clonar o repositório:**
+
+   ```
+   git clone https://github.com/GabrielBiziach/recruta-app.git
+   ```
+
+2. **Instalar as dependências:**
+
+   ```
+   cd recruta-app
+   npm install
+   ```
+
+3. **Executar o servidor de desenvolvimento:**
+
+   ```
+   ng serve
+   ```
+
+O servidor estará disponível em `http://localhost:4200`.
+
+## Licença
+
+Este projeto está licenciado sob a [Licença XYZ]. Consulte o arquivo `LICENSE` para obter mais detalhes.
+
+## Contato
+
+Gabriel Biziach - [email](gabrielbiziach@gmail.com) - [LinkedIn](https://www.linkedin.com/in/gabriel-biziach-rodrigues/)
