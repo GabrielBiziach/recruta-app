@@ -1,0 +1,26 @@
+<h2 class="mt-4">Gerenciamento de Candidaturas</h2>
+
+<h3 class="mt-4">Lista de Candidaturas</h3>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Usuário</th>
+      <th>Vaga</th>
+      <th>Status</th>
+      <th>Feedback</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let application of applications">
+      <td>{{ application.userId }}</td>
+      <td>{{ application.job?.title }}</td>
+      <td>{{ application.status }}</td>
+      <td>{{ application.feedback }}</td>
+      <td>
+        <button class="btn btn-primary btn-sm" (click)="updateStatus(application, application.status)">Alterar Status</button>
+        <button class="btn btn-secondary btn-sm" (click)="addFeedback(application, application.feedback)">Adicionar Feedback</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
