@@ -38,8 +38,8 @@ export class AuthService {
   }
 
   private setSession(authResponse: AuthResponse) {
-    sessionStorage.setItem('token', authResponse.token);
-    sessionStorage.setItem('currentUser', JSON.stringify({
+    localStorage.setItem('token', authResponse.token);
+    localStorage.setItem('currentUser', JSON.stringify({
       idUser: authResponse.idUser,
       username: authResponse.username,
       role: authResponse.role
@@ -52,13 +52,13 @@ export class AuthService {
   }
 
   private clearSession() {
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('currentUser');
+    localStorage.removeItem('token');
+    localStorage.removeItem('currentUser');
     this.currentUser = null;
   }
 
   getToken(): string | null {
-    return sessionStorage.getItem('token');
+    return localStorage.getItem('token');
   }
 
   getRole(): string | null {

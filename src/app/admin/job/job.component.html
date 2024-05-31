@@ -1,47 +1,87 @@
 <div class="container mt-4">
-  <h2 class="mb-4">Gerenciamento de Vagas</h2>
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a class="nav-link active" id="jobs-tab" href="/admin/jobs" role="tab" aria-controls="jobs" aria-selected="true">Vagas</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="applications-tab" href="/admin/applications" role="tab" aria-controls="applications" aria-selected="false">Candidaturas</a>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="jobs" role="tabpanel" aria-labelledby="jobs-tab">
+      <h2 class="mt-4">Gerenciamento de Vagas</h2>
 
-  <form [formGroup]="jobForm" (ngSubmit)="submitForm()">
-    <div class="mb-3">
-      <label for="title" class="form-label">Título</label>
-      <input type="text" id="title" formControlName="title" class="form-control" required>
-    </div>
-    <div class="mb-3">
-      <label for="description" class="form-label">Descrição</label>
-      <textarea id="description" formControlName="description" class="form-control" rows="3" required></textarea>
-    </div>
-    <div class="mb-3">
-      <label for="requirements" class="form-label">Requisitos</label>
-      <textarea id="requirements" formControlName="requirements" class="form-control" rows="3" required></textarea>
-    </div>
-    <div class="d-flex justify-content-end">
-      <button type="submit" class="btn btn-primary btn-sm me-2">{{ editingJob ? 'Atualizar' : 'Cadastrar' }}</button>
-      <button type="button" class="btn btn-secondary btn-sm" (click)="resetForm()">Cancelar</button>
-    </div>
-  </form>
+      <form [formGroup]="jobForm" (ngSubmit)="submitForm()">
+        <div class="mb-3">
+          <label for="title" class="form-label">Título</label>
+          <input type="text" id="title" formControlName="title" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">Descrição</label>
+          <textarea id="description" formControlName="description" class="form-control" rows="3" required></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="requirements" class="form-label">Requisitos</label>
+          <textarea id="requirements" formControlName="requirements" class="form-control" rows="3" required></textarea>
+        </div>
+        <div class="d-flex justify-content-end">
+          <button type="submit" class="btn btn-primary btn-sm me-2">{{ editingJob ? 'Atualizar' : 'Cadastrar' }}</button>
+          <button type="button" class="btn btn-secondary btn-sm" (click)="resetForm()">Cancelar</button>
+        </div>
+      </form>
 
-  <h3 class="mt-4">Lista de Vagas</h3>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Título</th>
-        <th>Descrição</th>
-        <th>Requisitos</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let job of jobs">
-        <td>{{ job.title }}</td>
-        <td>{{ job.description }}</td>
-        <td>{{ job.requirements }}</td>
-        <td>
-          <div class="d-flex justify-content-start">
-            <button class="btn btn-warning btn-sm me-2" (click)="editJob(job)">Editar</button>
-            <button class="btn btn-danger btn-sm" (click)="deleteJob(job.id)">Excluir</button>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+      <h3 class="mt-4">Lista de Vagas</h3>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Título</th>
+            <th>Descrição</th>
+            <th>Requisitos</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let job of jobs">
+            <td>{{ job.title }}</td>
+            <td>{{ job.description }}</td>
+            <td>{{ job.requirements }}</td>
+            <td>
+              <div class="d-flex justify-content-start">
+                <button class="btn btn-warning btn-sm me-2" (click)="editJob(job)">Editar</button>
+                <button class="btn btn-danger btn-sm" (click)="deleteJob(job.id)">Excluir</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tab-pane fade" id="applications" role="tabpanel" aria-labelledby="applications-tab">
+      <h2 class="mt-4">Gerenciamento de Candidaturas</h2>
+
+      <h3 class="mt-4">Lista de Candidaturas</h3>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Usuário</th>
+            <th>Vaga</th>
+            <th>Status</th>
+            <th>Feedback</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let application of applications">
+            <td>{{ application.userId}}</td>
+            <td>{{ application.job?.title }}</td>
+            <td>{{ application.status }}</td>
+            <td>{{ application.feedback }}</td>
+            <td>
+              <button class="btn btn-primary btn-sm" (click)="updateStatus(application, application.status)">Alterar Status</button>
+              <button class="btn btn-secondary btn-sm" (click)="addFeedback(application, application.feedback)">Adicionar Feedback</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

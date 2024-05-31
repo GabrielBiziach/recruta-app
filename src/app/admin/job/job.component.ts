@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { JobService } from '../../services/job.service';
 import { Job } from '../../models/job.model';
+import { ApplicationJob } from '../../models/application-job.model';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ApplicationJobService } from '../../services/application-job.service';
 
 
 @Component({
@@ -14,10 +16,15 @@ import { CommonModule } from '@angular/common';
 })
 export class JobComponent implements OnInit {
   jobs: Job[] = [];
+  applications: ApplicationJob[] = [];
   jobForm: FormGroup;
   editingJob: Job | null = null;
 
-  constructor(private jobService: JobService, private fb: FormBuilder) {
+  constructor(
+    private jobService: JobService,
+    private fb: FormBuilder,
+    private applicationJobService: ApplicationJobService
+  ) {
     this.jobForm = this.fb.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
@@ -27,6 +34,7 @@ export class JobComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadJobs();
+    this.loadApplications();
   }
   
   loadJobs(): void {
@@ -36,6 +44,17 @@ export class JobComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error loading jobs:', err);
+      }
+    });
+  }
+
+  loadApplications(): void {
+    this.applicationJobService.getAllApplications().subscribe({
+      next: (data) => {
+        this.applications = data;
+      },
+      error: (err) => {
+        console.error('Error loading applications:', err);
       }
     });
   }
@@ -68,5 +87,28 @@ export class JobComponent implements OnInit {
   resetForm(): void {
     this.jobForm.reset();
     this.editingJob = null;
+  }
+
+  updateStatus(application: ApplicationJob, newStatus: string): void {
+    if (application.id !== undefined) {
+      application.status = newStatus;
+      this.applicationJobService.updateApplication(application.id, { status: newStatus }).subscribe(() => {
+        console.log('Status atualizado!');
+      });
+    } else {
+      console.error('Aplicação não encontrada para atualizar.');
+    }
+
+  }
+
+  addFeedback(application: ApplicationJob, feedback: string): void {
+    if (application.id !== undefined) {
+      application.feedback = feedback;
+      this.applicationJobService.updateApplication(application.id, { feedback: feedback }).subscribe(() => {
+        console.log('Feedback adicionado!');
+      });
+    } else {
+      console.error('Aplicação não encontrada para atualizar.');
+    }
   }
 }

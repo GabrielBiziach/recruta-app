@@ -6,6 +6,7 @@ export interface ApplicationJob {
     jobId: number;
     applicationDate: Date;
     status: string;
+    feedback: string;
     job?: Job;
   }
   

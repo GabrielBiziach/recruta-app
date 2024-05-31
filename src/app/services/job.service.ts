@@ -14,7 +14,7 @@ export class JobService {
   constructor(private http: HttpClient) {}
 
   private getAuthHeaders(): HttpHeaders{
-    const token = sessionStorage.getItem('token');
+    const token = localStorage.getItem('token');
     return new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
