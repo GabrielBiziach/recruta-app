@@ -1,16 +1,18 @@
 // auth.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { environment } from '../environments/environment';
+import { User } from '../models/user.model';
 
 interface AuthResponse {
   token: string;
   role: string;
   idUser: number;
   username: string;
+  name: string;
 }
 
 @Injectable({
@@ -18,9 +20,17 @@ interface AuthResponse {
 })
 export class AuthService {
   private authUrl = `${environment.apiUrl}/auth/login`;
-  private currentUser: { idUser: number, role: string, username: string } | null = null;
+  private currentUser: { idUser: number, role: string, username: string, name: string } | null = null;
 
   constructor(private http: HttpClient, private router: Router) { }
+
+  private getAuthHeaders(): HttpHeaders{
+    const token = sessionStorage.getItem('token');
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+  }
 
   login(username: string, password: string): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(this.authUrl, { username, password })
@@ -38,8 +48,8 @@ export class AuthService {
   }
 
   private setSession(authResponse: AuthResponse) {
-    localStorage.setItem('token', authResponse.token);
-    localStorage.setItem('currentUser', JSON.stringify({
+    sessionStorage.setItem('token', authResponse.token);
+    sessionStorage.setItem('currentUser', JSON.stringify({
       idUser: authResponse.idUser,
       username: authResponse.username,
       role: authResponse.role
@@ -47,18 +57,19 @@ export class AuthService {
     this.currentUser = {
       idUser: authResponse.idUser,
       username: authResponse.username,
-      role: authResponse.role
+      role: authResponse.role,
+      name: authResponse.name
     };
   }
 
   private clearSession() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('currentUser');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('currentUser');
     this.currentUser = null;
   }
 
   getToken(): string | null {
-    return localStorage.getItem('token');
+    return sessionStorage.getItem('token');
   }
 
   getRole(): string | null {
@@ -68,6 +79,11 @@ export class AuthService {
   getUserId(): number | null {
     return this.currentUser ? this.currentUser.idUser : null;
   }
+
+  getUserById(id: number) {
+    return this.http.get<User>(`${environment.apiUrl}/auth/user/${id}`);
+  }
+
 
   private redirectUser(role: string) {
     if (role === 'admin') {

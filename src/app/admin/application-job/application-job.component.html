@@ -13,13 +13,19 @@
   </thead>
   <tbody>
     <tr *ngFor="let application of applications">
-      <td>{{ application.userId }}</td>
+      <td>{{ application.user?.name }}</td>
       <td>{{ application.job?.title }}</td>
-      <td>{{ application.status }}</td>
-      <td>{{ application.feedback }}</td>
       <td>
-        <button class="btn btn-primary btn-sm" (click)="updateStatus(application, application.status)">Alterar Status</button>
-        <button class="btn btn-secondary btn-sm" (click)="addFeedback(application, application.feedback)">Adicionar Feedback</button>
+        <select [disabled]="!application.editing" class="form-select" [(ngModel)]="application.status">
+          <option value="PENDENTE">PENDENTE</option>
+          <option value="ACEITO">ACEITO</option>
+          <option value="REJEITADO">REJEITADO</option>
+          <option value="SOB_REVISAO">SOB_REVISAO</option>
+        </select>
+      </td>
+      <td><textarea [disabled]="!application.editing" class="form-control" [(ngModel)]="application.feedback"></textarea></td>
+      <td>
+        <button class="btn btn-primary btn-sm" (click)="toggleEdit(application)">Atualizar Candidatura</button>
       </td>
     </tr>
   </tbody>

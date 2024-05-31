@@ -1,15 +1,17 @@
 <div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center">
     <h2>Bem-vindo, Admin</h2>
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-      <li class="nav-item" role="presentation">
-        <a class="nav-link" routerLink="jobs" routerLinkActive="active" id="jobs-tab" role="tab" aria-controls="jobs" aria-selected="true">Vagas</a>
-      </li>
-      <li class="nav-item" role="presentation">
-        <a class="nav-link" routerLink="applications" routerLinkActive="active" id="applications-tab" role="tab" aria-controls="applications" aria-selected="false">Candidaturas</a>
-      </li>
-    </ul>
-    <div class="tab-content" id="myTabContent">
-      <router-outlet/>
-    </div>
+    <button (click)="logout()" class="btn btn-danger">Logout</button>
   </div>
-  
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" routerLink="jobs" routerLinkActive="active" id="jobs-tab" role="tab" aria-controls="jobs" aria-selected="true">Vagas</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" routerLink="applications" routerLinkActive="active" id="applications-tab" role="tab" aria-controls="applications" aria-selected="false">Candidaturas</a>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <router-outlet></router-outlet>
+  </div>
+</div>

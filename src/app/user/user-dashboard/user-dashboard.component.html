@@ -1,5 +1,8 @@
 <div class="container mt-4">
-  <h2 class="mb-4">Vagas Disponíveis</h2>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Vagas Disponíveis</h2>
+    <button class="btn btn-danger" (click)="logout()">Logout</button>
+  </div>
   <form [formGroup]="applicationForm" (ngSubmit)="applyToJob()">
     <div class="mb-3">
       <label for="jobId" class="form-label">Selecione uma vaga</label>
@@ -17,6 +20,7 @@
         <th>Título</th>
         <th>Data da Candidatura</th>
         <th>Status</th>
+        <th>Feedback Candidatura</th>
       </tr>
     </thead>
     <tbody>
@@ -24,6 +28,7 @@
         <td>{{ application.job?.title }}</td>
         <td>{{ application.applicationDate | date }}</td>
         <td>{{ application.status }}</td>
+        <td>{{ application.feedback }}</td>
       </tr>
     </tbody>
   </table>

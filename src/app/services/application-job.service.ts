@@ -14,7 +14,7 @@ export class ApplicationJobService {
 
   private getHeaders(): HttpHeaders {
     return new HttpHeaders({
-      'Authorization': `Bearer ${localStorage.getItem('token')}`
+      'Authorization': `Bearer ${sessionStorage.getItem('token')}`
     });
   }
 
@@ -26,7 +26,8 @@ export class ApplicationJobService {
     return this.http.post<ApplicationJob>(this.apiUrl, application, { headers: this.getHeaders() });
   }
 
-  updateApplication(applicationId: number, updatedData: Partial<ApplicationJob>): Observable<ApplicationJob> {
+  updateApplication(applicationId: number, 
+    updatedData: { user: { id: number }, job: { id: number }, applicationDate: Date, status: string, feedback: string}): Observable<ApplicationJob> {
     const url = `${this.apiUrl}/${applicationId}`;
     return this.http.put<ApplicationJob>(url, updatedData, { headers: this.getHeaders() });
   }

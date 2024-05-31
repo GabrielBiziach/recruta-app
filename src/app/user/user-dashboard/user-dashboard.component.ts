@@ -53,7 +53,6 @@ export class UserDashboardComponent implements OnInit {
   applyToJob() {
     const userId = this.authService.getUserId();
     const jobId = this.applicationForm.get('jobId')?.value;
-    console.log(userId);
 
     if (userId !== null) {
 
@@ -70,4 +69,9 @@ export class UserDashboardComponent implements OnInit {
       console.error('User not logged in');
     }
   }
+
+  logout() {
+    this.authService.logout();
+  }
+
 }
