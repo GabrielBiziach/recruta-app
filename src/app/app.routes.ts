@@ -10,15 +10,13 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { 
     path: 'admin', 
-    component: AdminComponent, 
-    data: { role: 'admin' },
+    component: AdminComponent,
     children: [
-      { path: '', redirectTo: '', pathMatch: 'full' },
+      { path: '', redirectTo: 'jobs', pathMatch: 'full' },
       { path: 'jobs', component: JobComponent },
       { path: 'applications', component: ApplicationJobComponent },
     ]
   },
   { path: 'user', component: UserDashboardComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  // { path: '', redirectTo: '/user-dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];

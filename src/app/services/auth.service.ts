@@ -15,11 +15,21 @@ interface AuthResponse {
   name: string;
 }
 
+interface RegisterRequest {
+  username: string;
+  password: string;
+  role: string;
+  name: string;
+  email: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private authUrl = `${environment.apiUrl}/auth/login`;
+  private registerUrl = `${environment.apiUrl}/auth/register`;
+
   private currentUser: { idUser: number, role: string, username: string, name: string } | null = null;
 
   constructor(private http: HttpClient, private router: Router) { }
@@ -33,13 +43,16 @@ export class AuthService {
   }
 
   login(username: string, password: string): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(this.authUrl, { username, password })
-      .pipe(
-        tap(response => {
-          this.setSession(response);
-          this.redirectUser(response.role);
-        })
-      );
+    return this.http.post<AuthResponse>(this.authUrl, { username, password }).pipe(
+      tap(response => {
+        this.setSession(response);
+        this.redirectUser(response.role);
+      })
+    );
+  }
+
+  register(registerData: RegisterRequest): Observable<any> {
+    return this.http.post<any>(this.registerUrl, registerData);
   }
 
   logout() {
