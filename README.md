@@ -55,6 +55,12 @@ Antes de executar o projeto, certifique-se de ter instalado:
 
 O servidor estará disponível em `http://localhost:4200`.
 
+4. **Criar Usuários:**
+
+- Antes de iniciar o frontend, lembre-se de já ter instalado e configurado o banco de dados, e iniciado também o projeto backend, e após esses passos, você poderá criar usuários ADMIN e USER.
+- Um usuário ADMIN terá permissões para criar vagas de emprego.
+- Um usuário USER poderá se candidatar às vagas criadas.
+
 ## Licença
 
 Este projeto está licenciado sob a [Licença XYZ]. Consulte o arquivo `LICENSE` para obter mais detalhes.
