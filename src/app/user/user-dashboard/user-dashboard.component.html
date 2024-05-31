@@ -1,6 +1,6 @@
 <div class="container mt-4">
   <h2 class="mb-4">Vagas Disponíveis</h2>
-  <form [formGroup]="applicationForm" (ngSubmit)="applyToJob(applicationForm.value.jobId)">
+  <form [formGroup]="applicationForm" (ngSubmit)="applyToJob()">
     <div class="mb-3">
       <label for="jobId" class="form-label">Selecione uma vaga</label>
       <select id="jobId" formControlName="jobId" class="form-control" required>

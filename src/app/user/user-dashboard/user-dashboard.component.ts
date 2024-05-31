@@ -50,20 +50,22 @@ export class UserDashboardComponent implements OnInit {
     });
   }
 
-  applyToJob(jobId: number) {
+  applyToJob() {
     const userId = this.authService.getUserId();
+    const jobId = this.applicationForm.get('jobId')?.value;
+    console.log(userId);
 
     if (userId !== null) {
-      const application: ApplicationJob = {
-        jobId: jobId,
-        userId: userId,
-        applicationDate: new Date(),
-        status: 'PENDENTE'
+
+      const application = {
+        user: { id: userId },
+        job: { id: jobId }
       };
 
       this.applicationJobService.applyToJob(application).subscribe(() => {
         this.loadApplications();
       });
+      
     } else {
       console.error('User not logged in');
     }

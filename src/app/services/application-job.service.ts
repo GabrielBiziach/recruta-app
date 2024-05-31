@@ -22,7 +22,8 @@ export class ApplicationJobService {
     return this.http.get<ApplicationJob[]>(this.apiUrl, { headers: this.getHeaders() });
   }
 
-  applyToJob(application: ApplicationJob): Observable<ApplicationJob> {
+  applyToJob(application: { user: { id: number }, job: { id: number } }): Observable<ApplicationJob> {
     return this.http.post<ApplicationJob>(this.apiUrl, application, { headers: this.getHeaders() });
   }
+  
 }
